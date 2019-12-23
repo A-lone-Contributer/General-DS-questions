@@ -1,1 +1,69 @@
-# TO-DO
+// Count the number of Nodes in a linked list
+
+public class LinkedListLength {
+    Node head;
+
+    // Creation of node class
+    class Node {
+        int data;
+        Node next;
+
+        // Node constructor for initialisation of data and next
+        Node(int data) {
+            this.data = data;
+            next = null;
+
+        }
+    }
+
+    // function for inserting in linkedlist (at the start)
+    public void push(int data) {
+
+        Node new_node = new Node(data);
+        new_node.next = head;
+        head = new_node;
+    }
+
+    // to count the number of nodes in a faster way (O(n/2))
+    public int getcount() {
+        
+        // Initialise the counter
+        int count = 0;
+        
+        // initialise a temp node with head
+        Node temp = head;
+
+        // While the temp is not null (there is node in linked list) as well as it has node after it
+        while (temp != null && temp.next != null) {
+            
+            // increment the count by 2
+            count += 2;
+            
+            // move the pointer twice
+            temp = temp.next.next;
+        }
+        
+        // if temp next is null from the start then there is only one node
+        if (temp != null) {
+            count += 1;
+        }
+        
+        // return the count
+        return count;
+
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+
+        LinkedListLength ll = new LinkedListLength();
+        ll.push(5);
+        ll.push(6);
+        ll.push(7);
+        ll.push(11);
+        System.out.println(ll.getcount());
+    }
+}
+
+// Time Complexity : O(n/2)
+// Space Complexity : O(1) ( for counting)
