@@ -1,0 +1,102 @@
+// Find the Nth node in Linked List from the last (2 pointer approach)
+
+class LinkedListNthNode {
+    Node head;
+
+    // Creation of node class
+    static class Node {
+        int data;
+        Node next;
+
+        // Node constructor for initialisation of data and next
+        Node(int data) {
+            this.data = data;
+            next = null;
+
+        }
+    }
+
+    // function for inserting in linked list (at the start)
+    public void push(int data) {
+
+        Node new_node = new Node(data);
+        new_node.next = head;
+        head = new_node;
+    }
+
+    // Function to find the Nth node from end in linked list
+    public int nthNodeFromEnd(int loc) {
+
+        // initialise two pointers temp1 and temp2 
+        Node temp1 = head,temp2 = head;
+        
+        // pointer to count the number of nodes
+        int count = 0;
+        
+        // if we have atleast one node
+        if (head != null) {
+            
+            // and count is less than location specified
+            while (count < loc) {
+                
+                // if the temp2 is null then location specified is more than the length of linked list
+                if (temp2 == null) {
+                    
+                    System.out.print("n is greater than length of linked list");
+                    return 0;
+                }
+                
+                // increment count and move temp2
+                temp2 = temp2.next;
+                count++;
+            }
+
+            // while temp2 is not null i.e isn't at the end
+            while (temp2 != null) {
+                
+                // increment both the pointers
+                temp1 = temp1.next;
+                temp2 = temp2.next;
+            }
+            
+        }
+        
+        // at this point temp2 is at the end and temp1 is at the specified location boz
+        // we placed temp2 at the loc and moved temp1 and temp2 till temp2 reached end 
+        // now temp1 is at the loc from the end.
+        return temp1.data;
+    }
+
+    // Utility function to print the list
+    public void printlist() {
+        Node tnode = head;
+        while (tnode != null) {
+
+            System.out.print(tnode.data + " ");
+            tnode = tnode.next;
+        }
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+
+        LinkedListNthNode ll = new LinkedListNthNode();
+        ll.push(7);
+        ll.push(3);
+        ll.push(2);
+        ll.push(8);
+        ll.push(1);
+
+        ll.printlist();
+        System.out.println();
+
+        int loc=3;
+
+        System.out.print("The element at position "+loc+" from end is : "+ll.nthNodeFromEnd(3));
+
+    }
+
+}
+
+// Time Complexity : O(n)
+// Space Complexity : O(1) (for the question)
