@@ -1,6 +1,6 @@
 // To find the middle element of a linked list
 
-public class Misc {
+public class Middle {
 
     // Reference of Node 
     Node head;
@@ -49,7 +49,7 @@ public class Misc {
 
     // Driver code 
     public static void main(String[] args) {
-        Misc ll = new Misc();
+        Middle ll = new Middle();
         ll.push(5);
         ll.push(7);
         ll.push(8);
