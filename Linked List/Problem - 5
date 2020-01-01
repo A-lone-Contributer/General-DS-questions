@@ -1,0 +1,74 @@
+// Given a linked list of N nodes. The task is to check if the the linked list has a loop.
+// Linked list can contain self loop.
+
+import java.util.HashSet;
+
+public class Misc {
+
+    // Reference of Node
+    Node head;
+
+    // Creation of node class
+    static class Node {
+        int data;
+        Node next;
+
+        // Node constructor for initialisation of data and next
+        Node(int data) {
+            this.data = data;
+            next = null;
+        }
+    }
+
+    // Function for inserting in linked list (at the start)
+    public void push(int data) {
+
+        Node new_node = new Node(data);
+        new_node.next = head;
+        head = new_node;
+    }
+
+    // Function to detect loop
+    static boolean detectLoop(Node h) {
+
+        // Create a hash set
+        HashSet<Node> set = new HashSet<Node>();
+
+        // While there are elements
+        while (h != null) {
+
+            // Check if the element's hash value is already present
+            if (set.contains(h))
+
+                // Which means Linked List has a loop thus return true
+                return true;
+
+            // Else add the element to the set
+            set.add(h);
+
+            // Increment the head pointer
+            h = h.next;
+        }
+
+        // If no loop detected then return false
+        return false;
+    }
+
+
+    // Driver code
+    public static void main(String[] args) {
+        Misc ll = new Misc();
+        ll.push(5);
+        ll.push(7);
+        ll.push(8);
+        ll.push(9);
+        ll.push(11);
+
+        ll.head.next.next.next = ll.head;
+        System.out.println(detectLoop(ll.head));
+    }
+
+}
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
