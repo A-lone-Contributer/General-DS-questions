@@ -1,0 +1,97 @@
+// To Check whether the given Linked List is a palindrome.
+// (Stack Approach)
+
+import java.util.Stack;
+
+class Misc {
+
+    // Reference of Node
+    Node head;
+
+    // Creation of node class
+    static class Node {
+        String data;
+        Node next;
+
+        // Node constructor for initialisation of data and next
+        Node(String data) {
+            this.data = data;
+            next = null;
+        }
+    }
+
+    // Function for inserting in linked list (at the start)
+    public void push(String data) {
+
+        Node new_node = new Node(data);
+        new_node.next = head;
+        head = new_node;
+    }
+
+    // Function to check if Linked List is palindrome
+    public boolean palindromechecker() {
+        
+        // Create a Stack
+        Stack<String> stack = new Stack<String>();
+        
+        // Keep a pointer pointing to head
+        Node tmp = head;
+        
+        // flag for checking palindrome
+        boolean ispalindrome = true;
+        
+        // Till tmp is not null
+        while (tmp != null) {
+            
+            // Push the data onto the stack
+            stack.push(tmp.data);
+            
+            // Move tmp
+            tmp = tmp.next;
+        }
+
+        // Till head is not null
+        while (head != null) {
+            
+            // Pop from the stack
+            String i = stack.pop();
+            
+            // Compare to the data in Linked List 
+            if (i.equals(head.data)) {
+                
+                // Make the flag True 
+                ispalindrome= true;
+            } else {
+                
+                // else make the flag false and break
+                ispalindrome = false;
+                break;
+            }
+            
+            // Keep moving head
+            head = head.next;
+        }
+        
+        // return the flag
+        return ispalindrome;
+    }
+
+
+    // Driver code
+    public static void main(String[] args) {
+        Misc ll = new Misc();
+        ll.push("s");
+        ll.push("a");
+        ll.push("d");
+        ll.push("a");
+        ll.push("s");
+        if (ll.palindromechecker()){
+            System.out.println("Palindrome!");
+        }
+        else
+            System.out.println("Not a Palindrome");
+    }
+}
+
+// Time Complexity : O(N)
+// Space Complexity : O(N)
