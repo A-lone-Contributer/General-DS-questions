@@ -5,7 +5,7 @@ public class Middle {
     // Reference of Node 
     Node head;
 
-    // Creation of node class
+    // Node class
     static class Node {
         int data;
         Node next;
