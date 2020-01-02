@@ -1,0 +1,80 @@
+// To find the length of loop in a Linked List if present.
+
+class Loop {
+
+    // Reference of Node
+    Node head;
+
+    // Creation of node class
+    static class Node {
+        int data;
+        Node next;
+
+        // Node constructor for initialisation of data and next
+        Node(int data) {
+            this.data = data;
+            next = null;
+        }
+    }
+
+    // Function for inserting in linked list (at the start)
+    public void push(int data) {
+
+        Node new_node = new Node(data);
+        new_node.next = head;
+        head = new_node;
+    }
+
+    // Function to detect loop
+    static int detectLoop(Node h) {
+        
+        // Initialise slow and fast pointers to head
+        Node slow_ptr=h; Node fast_ptr =h;
+        
+        // To count the length
+        int count = 0;
+        
+        // till slow and fast ptr haven't reached the end of Linked List
+        while (slow_ptr != null && fast_ptr != null && fast_ptr.next != null) {
+
+            // Move slow ptr
+            slow_ptr = slow_ptr.next;
+            
+            // Move fast ptr by double the speed of slow ptr
+            fast_ptr = fast_ptr.next.next;
+            
+            // Increment the count
+            count += 1;
+            
+            // if there exists a loop
+            if (slow_ptr == fast_ptr){
+                
+                // return the count till found
+                return count;
+            }
+
+        }
+        
+        // else return 0
+        return 0;
+    }
+
+
+        // Driver code
+        public static void main (String[]args){
+            Loop ll = new Loop();
+            ll.push(5);
+            ll.push(7);
+            ll.push(8);
+            ll.push(9);
+            ll.push(11);
+
+            ll.head.next.next.next = ll.head;
+            System.out.println(detectLoop(ll.head));
+        }
+
+    }
+
+
+// Time Complexity : O(N/2)
+// Space Complexity : O(1)
