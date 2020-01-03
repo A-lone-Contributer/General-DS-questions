@@ -1,0 +1,130 @@
+// To Check whether the given Linked List is a palindrome.
+// (Linked List reversal Approach)
+
+class Misc {
+
+    // Reference of Node
+    Node head;
+    Node slow_ptr, fast_ptr, second_half;
+
+    // Creation of node class
+    static class Node {
+        String data;
+        Node next;
+
+        // Node constructor for initialisation of data and next
+        Node(String data) {
+            this.data = data;
+            next = null;
+        }
+    }
+
+    // Function for inserting in linked list (at the start)
+    public void push(String data) {
+
+        Node new_node = new Node(data);
+        new_node.next = head;
+        head = new_node;
+    }
+
+    // Function to check if Linked List is palindrome
+    public boolean PalindromeChecker(Node head) {
+
+        // Initialise slow and fast ptr to head
+        slow_ptr = fast_ptr = head;
+
+        // Points to prev to slow ptr
+        Node prev_of_slow_ptr = head;
+
+        // Flag to check palindrome
+        boolean ispalindrome = true;
+
+        // If there is atleast one node in the list
+        if (head != null && head.next != null) {
+
+            // Traverse till we reach the end
+            while (fast_ptr != null && fast_ptr.next != null) {
+
+                // Keep prev of slow at slow ptr
+                prev_of_slow_ptr = slow_ptr;
+
+                // Move the slow ptr
+                slow_ptr = slow_ptr.next;
+
+                // Move fast pointer twice as slow ptr
+                fast_ptr = fast_ptr.next.next;
+            }
+
+            // If slow ptr is not null then the string is odd
+            if (fast_ptr != null) {
+
+                // move the slow ptr to next as middle element is of no use
+                // boz we will compare the two 'halves'
+                slow_ptr = slow_ptr.next;
+            }
+
+            // Second half starts from slow ptr
+            second_half = slow_ptr;
+
+            // Terminate the first half
+            prev_of_slow_ptr.next = null;
+            
+            // reverse the second half
+            reverse();
+            
+            // Compare the two lists for equality
+            ispalindrome = compare(head, second_half);
+
+        }
+
+        // return the flag
+        return ispalindrome;
+    }
+
+    // Utility Function to reverse the second half
+    public void reverse() {
+        Node prev = null;
+        Node curr = second_half;
+        Node Next;
+        while (curr != null) {
+            Next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = Next;
+        }
+        second_half = prev;
+    }
+
+    
+    // Utility function to compare the two lists
+    boolean compare(Node head1, Node head2) {
+        Node temp1 = head1;
+        Node temp2 = head2;
+        while (temp1 != null && temp2 != null) {
+            if (temp1.data.equals(temp2.data)) {
+                temp1 = temp1.next;
+                temp2 = temp2.next;
+            } else
+                return false;
+        }
+        return temp1 == null && temp2 == null;
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        Misc ll = new Misc();
+        ll.push("r");
+        ll.push("a");
+        ll.push("d");
+        ll.push("a");
+        ll.push("r");
+        if (ll.PalindromeChecker(ll.head)) {
+            System.out.println("Palindrome!");
+        } else
+            System.out.println("Not a Palindrome");
+    }
+}
+
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
