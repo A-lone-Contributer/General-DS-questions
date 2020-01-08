@@ -1,0 +1,78 @@
+// To remove Duplicates from a Sorted List
+
+class Misc {
+
+    // Reference of Node
+    Node head;
+
+    // Creation of node class
+    static class Node {
+        int data;
+        Node next;
+
+        // Node constructor for initialisation of data and next
+        Node(int data) {
+            this.data = data;
+            next = null;
+        }
+    }
+
+    // Function for inserting in linked list (at the start)
+    public void push(int data) {
+
+        Node new_node = new Node(data);
+        new_node.next = head;
+        head = new_node;
+    }
+
+    // Utility Function for printing the list
+    public void PrintList() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+    }
+
+    // Function to Delete Duplicates
+    public void DeleteDuplicates() {
+        //Keep a current pointer pointing intially to head
+        Node current = head;
+
+        // While current and current.next is not null
+        while (current != null && current.next != null) {
+            // Check if current data is equal to the next node data
+            if (current.data == current.next.data) {
+                // if yes then make next to next node as next node(Deleting the middle)
+                current.next = current.next.next;
+            }
+
+            // If no duplicate
+            else {
+                // Simply forward the current pointer
+                current = current.next;
+            }
+        }
+    }
+
+
+    // Driver code
+    public static void main(String[] args) {
+        Misc ll = new Misc();
+        ll.push(13);
+        ll.push(12);
+        ll.push(12);
+        ll.push(11);
+        ll.push(11);
+        System.out.println("Original List:");
+        ll.PrintList();
+        System.out.println();
+        ll.DeleteDuplicates();
+        System.out.println("List with Duplicates removed:");
+        ll.PrintList();
+    }
+}
+
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
