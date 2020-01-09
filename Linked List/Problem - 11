@@ -1,0 +1,82 @@
+// Make the last node as the first node of Linked List (No data swap)
+
+class Misc {
+
+    // Reference of Node
+    Node head;
+
+    // Creation of node class
+    static class Node {
+        int data;
+        Node next;
+
+        // Node constructor for initialisation of data and next
+        Node(int data) {
+            this.data = data;
+            next = null;
+        }
+    }
+
+    // Function for inserting in linked list (at the start)
+    public void push(int data) {
+
+        Node new_node = new Node(data);
+        new_node.next = head;
+        head = new_node;
+    }
+
+    // Utility Function for printing the list
+    public void PrintList() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + "->");
+            temp = temp.next;
+        }
+        System.out.print("Null");
+    }
+
+    // Function to move last node to the start
+    public void moveLast2Start() {
+        // Make references prev,curr and point them to null and head respectively
+        Node prev = null;
+        Node curr = head;
+
+        // While curr reaches the end node
+        while (curr.next != null) {
+            // move prev and curr by making prev as new current and current as previous' next
+            prev = curr;
+            curr = prev.next;
+        }
+
+        // to make last first make the curr(last node) and do the same thing as insertion of node at start
+        curr.next = head;
+        head = curr;
+
+        // Now make the second last node which is prev pnt to null so it becomes the end node
+        prev.next = null;
+
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        Misc ll = new Misc();
+        ll.push(3);
+        ll.push(50);
+        ll.push(2);
+        ll.push(1);
+        ll.push(20);
+        ll.push(10);
+        System.out.println("Original List:");
+        ll.PrintList();
+        System.out.println();
+        System.out.println("After Swapping:");
+        ll.moveLast2Start();
+        ll.PrintList();
+
+
+    }
+}
+
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
