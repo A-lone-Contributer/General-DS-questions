@@ -1,0 +1,103 @@
+// To do pairwise swap nodes of a Linked List (Do not swap the data)
+
+class Misc {
+
+    // Reference of Node
+    Node head;
+
+    // Creation of node class
+    static class Node {
+        int data;
+        Node next;
+
+        // Node constructor for initialisation of data and next
+        Node(int data) {
+            this.data = data;
+            next = null;
+        }
+    }
+
+    // Function for inserting in linked list (at the start)
+    public void push(int data) {
+
+        Node new_node = new Node(data);
+        new_node.next = head;
+        head = new_node;
+    }
+
+    // Utility Function for printing the list
+    public void PrintList() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + "->");
+            temp = temp.next;
+        }
+        System.out.print("Null");
+    }
+
+    // Function to pairwise swap the links
+    public void swap() {
+
+        // Create a reference of head
+        Node p = head;
+
+        // Advance the head node by one as the pairwise swapped list will have head pointing
+        // to second node
+        head = p.next;
+
+        while (true) {
+
+            // Make q point to next of p
+            Node q = p.next;
+
+            // Make temp point to next of q as when we will make link between p and q then
+            // q's next will be lost so we store it
+            Node temp = q.next;
+
+            // Swapping starts here
+            // point second node to first (of the pair)
+            q.next = p;
+
+            // Break condition (if we reach the end and encounter null then temp takes cares of that
+            // and if we have odd elements so we will not have all the pairs so temp.next takes cares of
+            // the early end)
+            if (temp == null || temp.next == null) {
+
+                // Make p's next as temp and break
+                p.next = temp;
+                break;
+            }
+
+            // Make temp's next as p's next
+            p.next = temp.next;
+
+            // Make temp as p ( first node of new pair to be swapped)
+            p = temp;
+
+        }
+
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        Misc ll = new Misc();
+        ll.push(3);
+        ll.push(50);
+        ll.push(2);
+        ll.push(1);
+        ll.push(20);
+        ll.push(10);
+        System.out.println("Original List:");
+        ll.PrintList();
+        System.out.println();
+        System.out.println("After Swapping:");
+        ll.swap();
+        ll.PrintList();
+
+
+    }
+}
+
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
