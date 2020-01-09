@@ -97,7 +97,8 @@ class Misc {
         // Repeat the above steps for nodeB accordingly
         if (prevB != null) {
             prevB.next = nodeA;
-        } else {
+        } 
+        else {
             head = nodeA;
         }
 
@@ -122,9 +123,8 @@ class Misc {
         ll.PrintList();
         System.out.println();
         System.out.println("After Swapping:");
-        ll.swap(50, 3);
+        ll.swap(2, 1);
         ll.PrintList();
-
 
     }
 }
