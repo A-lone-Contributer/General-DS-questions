@@ -1,0 +1,116 @@
+// Find the intersection of two Sorted Linked Lists
+
+class Misc {
+
+    // Creation of node class
+    static class Node {
+        int data;
+        Node next;
+
+        // Node constructor for initialisation of data and next
+        Node(int data) {
+            this.data = data;
+            next = null;
+        }
+    }
+
+    // Global variable for head of result list
+    Node root3 = null;
+
+    // Function for inserting in linked list (at the end)
+    public Node insert(Node root, int data) {
+        Node temp = new Node(data);
+        if (root == null) {
+            root = temp;
+        } else {
+            Node ptr = root;
+            while (ptr.next != null) {
+                ptr = ptr.next;
+            }
+            ptr.next = temp;
+        }
+        return root;
+    }
+
+    // Function to find the intersection
+    public void intersection(Node root1, Node root2) {
+        
+        // Initialise two nodes ptr1 and ptr2 
+        Node ptr1, ptr2;
+        ptr1 = root1;
+        ptr2 = root2;
+
+        // While the head of both the lists isn't null
+        while (ptr1 != null && ptr2 != null) {
+
+            // If the data of both the list is same
+            if (ptr1.data == ptr2.data) {
+
+                // push either of the data
+                root3 = insert(root3, ptr1.data);
+
+                // Advance both the pointers
+                ptr1 = ptr1.next;
+                ptr2 = ptr2.next;
+
+                // if head1 is less than head2 then advance the head1 else head2
+            } else if (ptr1.data < ptr2.data) {
+                ptr1 = ptr1.next;
+            } else {
+                ptr2 = ptr2.next;
+
+            }
+        }
+
+    }
+
+    // Utility Function for printing the list
+    public void PrintList(Node root) {
+        Node temp = root;
+        while (temp != null) {
+            System.out.print(temp.data + "->");
+            temp = temp.next;
+        }
+        System.out.print("Null");
+    }
+
+
+    // Driver code
+    public static void main(String[] args) {
+        Misc l1 = new Misc();
+
+        Node root1 = null;
+        Node root2 = null;
+        root1 = l1.insert(root1, 1);
+        root1 = l1.insert(root1, 2);
+        root1 = l1.insert(root1, 4);
+        root1 = l1.insert(root1, 5);
+
+        Misc l2 = new Misc();
+
+        root2 = l2.insert(root2, 2);
+        root2 = l2.insert(root2, 4);
+        root2 = l2.insert(root2, 5);
+        root2 = l2.insert(root2, 6);
+        root2 = l2.insert(root2, 10);
+
+        Misc l3 = new Misc();
+        
+        System.out.println("First List:");
+        l1.PrintList(root1);
+        System.out.println();
+        System.out.println("Second list:");
+        l2.PrintList(root2);
+        System.out.println();
+
+        System.out.println("After intersection:");
+
+        l3.intersection(root1, root2);
+
+        l3.PrintList(l3.root3);
+
+    }
+}
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
