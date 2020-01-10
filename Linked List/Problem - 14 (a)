@@ -1,0 +1,122 @@
+// Find the intersection point of two Sorted Linked Lists
+// (Using difference of lengths)
+
+class Misc {
+
+    static Node root1, root2;
+
+    // Creation of node class
+    static class Node {
+        int data;
+        Node next;
+
+        // Node constructor for initialisation of data and next
+        Node(int data) {
+            this.data = data;
+            next = null;
+        }
+    }
+
+    // Utility Function to count the lenght of linked lists
+    public int getcount(Node temp) {
+        Node node = temp;
+        int count = 0;
+        while (node != null) {
+            count++;
+            node = node.next;
+        }
+        return count;
+
+    }
+
+    // Function to find the intersection point
+    public int intersectionPoint(Node root1, Node root2) {
+
+        // Initialise two nodes ptr1 and ptr2
+        Node ptr1, ptr2;
+        ptr1 = root1;
+        ptr2 = root2;
+
+        // find the difference
+        int d = getcount(root1) - getcount(root2);
+
+        // If it is positive means list1 is bigger so advance ptr1 till it 
+        // reaches a point where ptr1 and ptr2 are at the same point
+        if (d > 0) {
+            for (int i = 0; i < d; i++) {
+                if (ptr1 == null) {
+                    return -1;
+                }
+                ptr1 = ptr1.next;
+            }
+            
+            // else list2 is bigger thus do the above step for ptr2
+        } else if (d < 0) {
+            for (int i = 0; i < Math.abs(d); i++) {
+
+                if (ptr2 == null) {
+                    return -1;
+                }
+                ptr2 = ptr2.next;
+            }
+        }
+        
+        // When both pointers are at the same point check for
+        // a point where both have same data (intersection point)
+        while (ptr1 != null && ptr2 != null) {
+            if (ptr1.data == ptr2.data) {
+                return ptr1.data;
+            }
+
+            // advance both pntrs
+            ptr1 = ptr1.next;
+            ptr2 = ptr2.next;
+        }
+        
+        // else not found
+        return -1;
+    }
+
+
+    // Utility Function for printing the list
+    public void PrintList(Node ptr) {
+        Node temp = ptr;
+        while (temp != null) {
+            System.out.print(temp.data + "->");
+            temp = temp.next;
+        }
+        System.out.print("Null");
+    }
+
+
+    // Driver code
+    public static void main(String[] args) {
+        Misc list = new Misc();
+
+        root1 = new Node(3);
+        root1.next = new Node(6);
+        root1.next.next = new Node(9);
+        root1.next.next.next = new Node(15);
+        root1.next.next.next.next = new Node(30);
+
+        list.PrintList(root1);
+
+        System.out.println();
+
+        // creating second linked list
+        root2 = new Node(10);
+        root2.next = new Node(15);
+        root2.next.next = new Node(30);
+
+        list.PrintList(root2);
+        System.out.println();
+        System.out.println("Intersection point is:");
+        System.out.print(list.intersectionPoint(root1, root2));
+    }
+
+}
+
+
+// Time Complexity : O(M+N)
+// where m and n are the lengths of list 1 and 2 respectively.
+// Space Complexity : O(1)
