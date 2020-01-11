@@ -1,0 +1,147 @@
+// Segregate the even and odd elements (order should be preserved)
+
+public class Misc {
+
+    // Creation of node class
+    static Node head;
+
+    static class Node {
+        int data;
+        Node next;
+
+        Node(int d) {
+            this.data = d;
+            this.next = null;
+        }
+    }
+
+    // Utility function to insert the node at the end of list
+    void push(int data) {
+        if (head == null) {
+            head = new Node(data);
+            return;
+        }
+
+        Node curr = head;
+        while (curr.next != null)
+            curr = curr.next;
+
+        curr.next = new Node(data);
+    }
+
+    // Utility function to print the List
+    void printList(Node n) {
+        while (n != null) {
+            System.out.print(n.data);
+            System.out.print("->");
+            n = n.next;
+        }
+        System.out.println("Null");
+    }
+
+    public void segregate() {
+
+        // Points to the head of Linked list with odd elements
+        Node oddHead = null;
+
+        // Points to the head of Linked list with even elements
+        Node evenHead = null;
+
+        // Points to the last encountered even element
+        Node LastEven = null;
+
+        // Points to the last encountered odd element
+        Node LastOdd = null;
+
+        // Points to the current node of linked list
+        Node curr = head;
+
+
+        // while there are nodes in the list
+        while (curr != null) {
+
+            // check if the element is even
+            if (curr.data % 2 == 0) {
+
+                // if no even node is encountered yet
+                if (evenHead == null) {
+
+                    // make the current node as last seen even and head of even linked list
+                    LastEven = evenHead = curr;
+                } else {
+
+                    // else make the next node of last seen node point to the new encountered
+                    // even node (curr)
+                    LastEven.next = curr;
+
+                    // update the curr to last seen even
+                    LastEven = curr;
+                }
+
+                // do exactly the same steps as above if the node is odd
+            } else if (curr.data % 2 == 1) {
+
+                if (oddHead == null) {
+                    oddHead = LastOdd = curr;
+                } else {
+                    LastOdd.next = curr;
+                    LastOdd = curr;
+                }
+            }
+
+            // update the curr pointer
+            curr = curr.next;
+
+        }
+
+        // At this point we have odd and even linked list separate so now we have
+        // link them such that even nodes comes first and odd nodes comes at the end
+
+        // if there are only even elements
+        if (evenHead != null) {
+
+            // make the even node as head
+            head = evenHead;
+        } else {
+
+            // if there are only odd elements
+            head = oddHead;
+        }
+
+        // iff our even linked list isn't empty we make the last node of even
+        // list point to the first node of the odd linked list
+        if (LastEven != null) {
+            LastEven.next = oddHead;
+        }
+
+        // as the odd list will have the end so we will mark the next of last node of
+        // odd linked as null
+        if (LastOdd != null) {
+            LastOdd.next = null;
+        }
+
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        Misc list = new Misc();
+        list.push(1);
+        list.push(8);
+        list.push(6);
+        list.push(7);
+        list.push(2);
+
+        System.out.println("Original List:");
+        list.printList(head);
+
+        list.segregate();
+
+        System.out.println("Segregated list:");
+        list.printList(head);
+
+    }
+}
+
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
