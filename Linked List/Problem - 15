@@ -1,0 +1,153 @@
+// Sort a Linked List by Sorting links and not the data (Quick Sort)
+
+public class Misc
+{
+
+    // Creation of node class
+    static Node head;
+    static class Node
+    {
+        int data;
+        Node next;
+
+        Node(int d)
+        {
+            this.data = d;
+            this.next= null;
+        }
+    }
+
+    // Utility function to insert the node at the end of list
+    void push(int data)
+    {
+        if(head == null)
+        {
+            head = new Node(data);
+            return;
+        }
+
+        Node curr = head;
+        while(curr.next != null)
+            curr = curr.next;
+
+        Node newNode = new Node(data);
+        curr.next = newNode;
+    }
+
+    // Utility function to print the List
+    void printList(Node n)
+    {
+        while(n != null)
+        {
+            System.out.print(n.data);
+            System.out.print("->");
+            n = n.next;
+        }
+        System.out.println("Null");
+    }
+
+    // Function for partitioning
+    Node partition(Node start,Node end)
+    {
+        // Boundary conditions
+        if(start==end || start==null || end==null)
+        {
+            return start;
+        }
+
+        // Make a pointer point to start
+        Node pivot_prev=start;
+        Node curr=start;
+
+        // Keep pivot as the last element
+        int pivot=end.data;
+
+        // while there are elements in the list
+        while (start!=end)
+        {
+            // if element is smaller than pivot
+            if(start.data<pivot)
+            {
+                // keep track of last modified item
+                pivot_prev=curr;
+
+                // analogous to swap(list[curr],list[start])
+                int temp=curr.data;
+                curr.data=start.data;
+                start.data=temp;
+
+                // increment curr
+                curr=curr.next;
+
+            }
+
+            // increment start if loop ends
+            start=start.next;
+        }
+
+        // if the list end then swap(curr,next suitable index and pivot)
+        int temp=curr.data;
+        curr.data=pivot;
+        end.data=temp;
+
+        // return previous of current as pivot now pnts to current
+        return pivot_prev;
+
+
+    }
+
+    public void sort(Node start,Node end)
+    {
+        if(start==end)
+        {
+            return;
+        }
+
+        // Split the list and partition recurse
+        Node pivot_prev=partition(start,end);
+        sort(start,pivot_prev);
+
+        // if the pivot picked move to start then start and
+        //pivot are same so pick from next of pivot
+        if( pivot_prev != null && pivot_prev == start )
+            sort(pivot_prev.next, end);
+
+        // if reaches end then simply return
+        if(pivot_prev!=null && pivot_prev.next==end){
+            return;
+        }
+
+        // if pivot is between of list so we take next of pivot
+        else if(pivot_prev != null && pivot_prev.next != null)
+            sort(pivot_prev.next.next, end);
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        Misc list=new Misc();
+        list.push(1);
+        list.push(8);
+        list.push(6);
+        list.push(7);
+        list.push(2);
+
+        Node n = list.head;
+
+        // making n point to the end of list
+        while(n.next != null)
+            n= n.next;
+
+        System.out.println("Before sorting:");
+        list.printList(list.head);
+
+        list.sort(list.head , n);
+
+        System.out.println("\n After sorting:");
+        list.printList(list.head);
+
+    }
+}
+
+
+// Time Complexity : O(N*log(N))
+// Space Complexity : O(log(n)) [Worst Case]
