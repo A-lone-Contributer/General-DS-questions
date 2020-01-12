@@ -1,0 +1,93 @@
+// Reversal of Linked list
+
+public class Misc {
+
+    // Creation of node class
+    static Node head;
+
+    static class Node {
+        int data;
+        Node next;
+
+        Node(int d) {
+            this.data = d;
+            this.next = null;
+        }
+    }
+
+    // Utility function to insert the node at the end of list
+    void push(int data) {
+        if (head == null) {
+            head = new Node(data);
+            return;
+        }
+
+        Node curr = head;
+        while (curr.next != null)
+            curr = curr.next;
+
+        curr.next = new Node(data);
+    }
+
+    // Utility function to print the List
+    void printList(Node n) {
+        while (n != null) {
+            System.out.print(n.data);
+            System.out.print("->");
+            n = n.next;
+        }
+        System.out.println("Null");
+    }
+
+    // Function to reverse the List
+    public Node reverse(Node node) {
+        
+        // initialise pointers 
+        Node prev = null;
+        Node curr = node;
+        Node next;
+
+        // while the list has elements
+        while (curr != null) {
+            
+            // make next as current node's next
+            next = curr.next;
+            
+            // make current's next point to prev 
+            curr.next = prev;
+            
+            // move all three pointers
+            prev = curr;
+            curr=next;
+
+        }
+        
+        // at the end make the head point to prev as last node becomes head
+        // in the reversed list
+        node = prev;
+        
+        // return the list
+        return node;
+
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        Misc list = new Misc();
+        list.push(1);
+        list.push(8);
+        list.push(6);
+        list.push(7);
+        list.push(2);
+
+        System.out.println("Original List:");
+        list.printList(head);
+
+        System.out.println("Reversed list:");
+        list.printList(list.reverse(head));
+
+    }
+}
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
