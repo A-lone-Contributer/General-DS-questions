@@ -1,0 +1,91 @@
+// Print the list in reverse without actually reversing it
+
+import java.util.Stack;
+
+public class Misc {
+
+    // Creation of node class
+    static Node head;
+
+    static class Node {
+        int data;
+        Node next;
+
+        Node(int d) {
+            this.data = d;
+            this.next = null;
+        }
+    }
+
+    // Utility function to insert the node at the end of list
+    void push(int data) {
+        if (head == null) {
+            head = new Node(data);
+            return;
+        }
+
+        Node curr = head;
+        while (curr.next != null)
+            curr = curr.next;
+
+        curr.next = new Node(data);
+    }
+
+    // Utility function to print the List
+    void printList(Node n) {
+        while (n != null) {
+            System.out.print(n.data);
+            System.out.print("->");
+            n = n.next;
+        }
+        System.out.println("Null");
+    }
+
+    // Function for reversing the list
+    public void printReverse()
+    {
+        
+        // Initialise a curr pntr pointing to head
+        Node curr=head;
+        
+        Stack<Integer> stack=new Stack<>();
+        
+        // while there are elements in list
+        while (curr!=null)
+        {
+            // push them onto the stack and advance curr pntr
+            stack.push(curr.data);
+            curr=curr.next;
+
+        }
+
+        // while the stack is not empty
+        while (!stack.isEmpty())
+        {
+            // print the top element i.e the last element will be printed first thus reverse
+            System.out.print(stack.pop()+"->");
+        }
+        System.out.print("Null");
+
+    }
+    
+    // Driver code
+    public static void main(String[] args) {
+        Misc list = new Misc();
+        list.push(1);
+        list.push(8);
+        list.push(6);
+        list.push(7);
+        list.push(2);
+
+        System.out.println("Original List:");
+        list.printList(head);
+
+        System.out.println("Reversed list:");
+        list.printReverse();
+
+    }
+}
+
+// Time Complexity : O(N)
+// Space Complexity : O(N)
