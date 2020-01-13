@@ -1,0 +1,104 @@
+// Reverse list in groups of k.
+// (Do not reverse if elements are less than k)
+
+public class Misc {
+
+    // Creation of node class
+    Node head;
+
+    static class Node {
+        int data;
+        Node next;
+
+        Node(int d) {
+            this.data = d;
+            this.next = null;
+        }
+    }
+
+    // Utility function to insert the node at the end of list
+    void push(int data) {
+        if (head == null) {
+            head = new Node(data);
+            return;
+        }
+
+        Node curr = head;
+        while (curr.next != null)
+            curr = curr.next;
+
+        curr.next = new Node(data);
+    }
+
+    // Function to find reverse elements in blocks
+    public Node reverse_in_blocks(Node head, int k) {
+
+        // Initialise variables
+        int k1 = k;
+        Node prev = null;
+        Node curr = head;
+        int lenght = 0;
+        Node temp = curr;
+
+        // calculate the length of list so that if length is less than k
+        // no reversing of nodes happens
+        while (temp != null) {
+            lenght++;
+            temp = temp.next;
+        }
+        if (lenght < k) {
+            return head;
+        }
+
+        // reversal till k1 exhausts i.e k times
+        while (curr != null && k1 != 0) {
+            Node next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            k1--;
+
+        }
+
+        // if current isn't null i.e we haven't reached end
+        if (curr != null) {
+            // make the prev (head of last reversal block) point to the current(node
+            // of the next block which is to be reversed)
+            head.next = reverse_in_blocks(curr, k);
+        }
+
+        // return the prev which is the head
+        return prev;
+    }
+
+    // Utility function to print the List
+    void printList(Node n) {
+        while (n != null) {
+            System.out.print(n.data);
+            System.out.print("->");
+            n = n.next;
+        }
+        
+        System.out.println("Null");
+    }
+
+
+    // Driver code
+    public static void main(String[] args) {
+        Misc list = new Misc();
+        list.push(1);
+        list.push(2);
+        list.push(3);
+        list.push(4);
+        list.push(5);
+
+        list.printList(list.head);
+
+        list.printList(list.reverse_in_blocks(list.head, 4));
+
+    }
+}
+
+
+// Time Complexity : O(N)
+// Space Complexity : O(k) [Stack Space]
