@@ -1,0 +1,86 @@
+// To delete alternate nodes of a Linked list
+
+public class Misc {
+
+    // Creation of node class
+    static Node head;
+
+    static class Node {
+        int data;
+        Node next;
+
+        Node(int d) {
+            this.data = d;
+            this.next = null;
+        }
+    }
+
+    // Utility function to insert the node at the end of list
+    void push(int data) {
+        if (head == null) {
+            head = new Node(data);
+            return;
+        }
+
+        Node curr = head;
+        while (curr.next != null)
+            curr = curr.next;
+
+        curr.next = new Node(data);
+    }
+
+    // Utility function to print the List
+    void printList(Node n) {
+        while (n != null) {
+            System.out.print(n.data);
+            System.out.print("->");
+            n = n.next;
+        }
+        System.out.println("Null");
+    }
+
+    // Function to delete alternate nodes
+    public Node DeleteAlternate(Node head)
+    {
+        
+        Node curr=head;
+        if (curr==null)
+        {
+            return null;
+        }
+        
+        // while there are elements
+        while (curr!=null && curr.next!=null)
+        {
+            
+            // make the curr node's next point to next to next node
+            curr.next=curr.next.next;
+            
+            // advance curr
+            curr=curr.next;
+            
+        }
+        
+        return head;
+    }
+
+    public static void main(String[] args) {
+        Misc list=new Misc();
+        for(int i=1;i<6;i++)
+        {
+            list.push(i);
+        }
+        System.out.println("Original List:");
+        list.printList(head);
+        
+        System.out.println();
+        
+        System.out.println("After deletion:");
+        list.printList(list.DeleteAlternate(head));
+
+    }
+
+}
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
