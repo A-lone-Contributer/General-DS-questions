@@ -1,0 +1,113 @@
+// To delete node which have a greater value on the right side
+
+public class Misc {
+
+    // Creation of node class
+    static Node head;
+
+    static class Node {
+        int data;
+        Node next;
+
+        Node(int d) {
+            this.data = d;
+            this.next = null;
+        }
+    }
+
+    // Utility function to insert the node at the end of list
+    void push(int data) {
+        if (head == null) {
+            head = new Node(data);
+            return;
+        }
+
+        Node curr = head;
+        while (curr.next != null)
+            curr = curr.next;
+
+        curr.next = new Node(data);
+    }
+
+    // Utility function to print the List
+    void printList(Node n) {
+        while (n != null) {
+            System.out.print(n.data);
+            System.out.print("->");
+            n = n.next;
+        }
+        System.out.println("Null");
+    }
+
+    // Function to delete greater elements on the right
+    public void delete_greater() {
+
+        if (head == null)
+            return;
+
+        Node h = head;
+
+        // Add the dummy node in the front
+        Node temp = new Node(0);
+        temp.next = h;
+
+        // References of first three nodes
+        Node prev = temp;
+        Node curr = temp.next;
+        Node next = temp.next.next;
+
+        while (next != null) {
+
+            // check if the current node's right elements has larger data than the current
+            if (next.data > curr.data) {
+
+                // if yes then make prev's next point to next
+                prev.next = next;
+                curr = curr.next;
+                next = next.next;
+
+
+            } else {
+
+                // else advance references
+                prev = prev.next;
+                curr = curr.next;
+                next = next.next;
+
+            }
+
+        }
+
+        // delete the temp node
+        temp = temp.next;
+        head = temp;
+    }
+
+
+    public static void main(String[] args) {
+        Misc list = new Misc();
+        list.push(12);
+        list.push(15);
+        list.push(10);
+        list.push(11);
+        list.push(5);
+        list.push(6);
+        list.push(2);
+        list.push(3);
+
+        System.out.println("Original List:");
+        list.printList(head);
+
+        System.out.println();
+        list.delete_greater();
+
+        System.out.println("Modified List:");
+        list.printList(head);
+
+
+    }
+
+}
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
