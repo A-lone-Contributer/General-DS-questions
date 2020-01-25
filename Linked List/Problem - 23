@@ -1,0 +1,98 @@
+// To rotate a linked list k times
+
+class Misc {
+    Node head;  // head of list
+
+    /* Linked list Node*/
+    static class Node {
+        int data;
+        Node next;
+
+        Node(int d) {
+            data = d;
+            next = null;
+        }
+    }
+
+    // Utility function to insert the node at the end of list
+    void push(int data) {
+        if (head == null) {
+            head = new Node(data);
+            return;
+        }
+
+        Node curr = head;
+        while (curr.next != null)
+            curr = curr.next;
+
+        curr.next = new Node(data);
+    }
+
+    // Utility function to print the list
+    void printList() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + "->");
+            temp = temp.next;
+        }
+        System.out.println("Null");
+    }
+
+    // Function to rotate the list k times
+    public void rotate(int k) {
+        Node temp = head;
+        int count = 1;
+
+        // while count is less than k and the list has elements
+        while (count < k && temp != null) {
+
+            // increase temp and count
+            temp = temp.next;
+            count++;
+        }
+
+        // if k is equal to or greater than count then simply return
+        if (temp == null) {
+            return;
+        }
+
+        // Make last point to the end of list
+        Node last = head;
+        while (last.next != null) {
+            last = last.next;
+        }
+
+
+        // make last node to previous head
+        last.next = head;
+
+        // make head to k+1th node
+        head = temp.next;
+
+        // make kth node point to null
+        temp.next = null;
+
+
+    }
+
+
+    public static void main(String[] args) {
+        Misc list = new Misc();
+
+        for (int i = 10; i <= 60; i += 10)
+            list.push(i);
+
+        System.out.println("Original list:");
+        list.printList();
+
+        list.rotate(3);
+        System.out.println();
+        System.out.println("Rotated Linked List:");
+        list.printList();
+    }
+
+}
+
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
