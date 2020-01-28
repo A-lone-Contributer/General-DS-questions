@@ -1,0 +1,148 @@
+// To sort a linked list having 0s,1s and 2s (using links)
+
+class Misc {
+    
+    Node head;  // head of list
+
+    // Node class
+    static class Node {
+        int data;
+        Node next;
+
+        Node(int d) {
+            data = d;
+            next = null;
+        }
+    }
+
+    // Utility function to insert the node at the end of list
+    void push(int data) {
+        if (head == null) {
+            head = new Node(data);
+            return;
+        }
+
+        Node curr = head;
+        while (curr.next != null)
+            curr = curr.next;
+
+        curr.next = new Node(data);
+    }
+
+    // Utility function to print the list
+    void printList(Node head) {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + "->");
+            temp = temp.next;
+        }
+        System.out.println("Null");
+    }
+
+    // function to sort 0s,1s and 2s
+    public Node sort(Node head) {
+
+        // if there is no element or has only one element the return that element
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        // initialise pointers
+        // Head stores the head of that list and without head are for movement
+        Node zeroHead = null;
+        Node oneHead = null;
+        Node twoHead = null;
+        Node zero = null;
+        Node one = null;
+        Node two = null;
+
+        Node curr = head;
+
+
+        // while there are elements
+        while (curr != null) {
+
+            // if the data is 0 and head is null then make 0's list head point
+            // to the current element
+            if (curr.data == 0) {
+                if (zeroHead == null) {
+                    zeroHead = zero = curr;
+                } else {
+
+                    // else advance pointers making curr as 0's list next
+                    zero.next = curr;
+                    zero = curr;
+                }
+            }
+
+            // same as 0's list
+            if (curr.data == 1) {
+                if (oneHead == null) {
+                    oneHead = one = curr;
+                } else {
+                    one.next = curr;
+                    one = curr;
+
+                }
+            }
+
+            // same as 0's list
+            if (curr.data == 2) {
+                if (twoHead == null) {
+                    twoHead = two = curr;
+                } else {
+                    two.next = curr;
+                    two = curr;
+
+                }
+            }
+            curr = curr.next;
+        }
+
+        // if there are 0's then check if 1's are present, if yes,
+        // then make zero list next point to 1's list else 2's list
+        if (oneHead != null) {
+            if (zero != null)
+                zero.next = oneHead;
+        } else {
+            if (zero != null)
+                zero.next = twoHead;
+        }
+
+        // join 1's list to 2's
+        if (one != null)
+            one.next = twoHead;
+
+        // make 2's end point to null
+        if (two != null)
+            two.next = null;
+
+        // make 0's list head as new head
+        head = zeroHead;
+
+        return head;
+
+
+    }
+
+    public static void main(String[] args) {
+        Misc list = new Misc();
+        list.push(1);
+        list.push(0);
+        list.push(2);
+        list.push(0);
+        list.push(1);
+
+        System.out.println("Original list:");
+        list.printList(list.head);
+
+
+        list.printList(list.sort(list.head));
+
+    }
+
+}
+
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
