@@ -1,0 +1,103 @@
+// Given a linked list of line segments , remove the middle points
+
+class Misc {
+    static Node head;
+
+    static class Node {
+        int x, y;
+        Node next;
+
+        Node(int x, int y) {
+            this.x = x;
+            this.y = y;
+            next = null;
+        }
+    }
+
+    // Utility Function to insert a element in the beginning
+    public void push(int x, int y) {
+        Node new_node = new Node(x, y);
+        new_node.next = head;
+        head = new_node;
+    }
+
+    // Utility Function to print linked list
+    static void printList(Node head) {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print("(" + temp.x + "," + temp.y + ")" + "->");
+            temp = temp.next;
+        }
+        System.out.println("Null");
+    }
+
+    // Function to delete a Node
+    static void delete(Node node) {
+        Node temp = node;
+        node = node.next;
+        temp = null;
+    }
+
+    // Function to delete the middle element
+    static void deleteMiddle() {
+
+        // check for boundary conditions
+        if (head == null || head.next == null || head.next.next == null) {
+            return;
+        }
+
+        Node temp = head;
+
+        // while there are elements
+        while (temp.next.next != null) {
+
+            // check if current node and next node has same data both for x (it is a vertical line)
+            // and y (it is a horizontal line)
+            if (temp.x == temp.next.x && temp.next.x == temp.next.next.x ||
+                    temp.next.y == temp.y && temp.next.next.y == temp.next.y) {
+
+                // delete the nodes
+                delete(temp.next);
+
+                // link the curr node and the next of node which is deleted
+                temp.next = temp.next.next;
+
+
+            } else
+
+                // if there isn't such element then simply skip without deleting
+                temp = temp.next;
+        }
+
+
+    }
+
+    // Driver Code
+    public static void main(String[] args) {
+
+        Misc list = new Misc();
+
+
+        list.push(40, 5);
+        list.push(20, 5);
+        list.push(10, 5);
+        list.push(10, 8);
+        list.push(10, 10);
+        list.push(3, 10);
+        list.push(1, 10);
+        list.push(0, 10);
+
+        System.out.println("Original list:");
+        printList(head);
+
+        deleteMiddle();
+
+        System.out.println("After deletion:");
+        printList(head);
+
+
+    }
+}
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
