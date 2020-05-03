@@ -1,0 +1,133 @@
+// Java program to delete all the
+// Fibonacci nodes from the
+// circular singly linked list
+class source {
+
+    // Structure for a node
+    static class Node {
+        int data;
+        Node next;
+
+    }
+
+    // Function to insert a node at the beginning
+    // of a Circular linked list
+    static Node push(Node head, int key) {
+        // Create a new node and make head as next
+        // of it.
+        Node new_node = new Node();
+        Node temp = head;
+        new_node.data = key;
+        new_node.next = head;
+
+        if (head == null) {
+            // make head as the first node
+            head = new_node;
+            new_node.next = new_node;
+        } else {
+            // If linked list is not null then
+            // set the next of last node
+            while (temp.next != head)
+                temp = temp.next;
+            temp.next = new_node;
+        }
+
+        head = new_node;
+        return head;
+    }
+
+
+    // Function print the list
+    static void printlist(Node head) {
+        Node temp = head;
+        if (head != null) {
+            do {
+                // Traverse first to last node
+                System.out.print(temp.data + " ");
+                temp = temp.next;
+            } while (temp != head);
+        }
+
+        System.out.println();
+
+    }
+
+    // A utility function that returns
+    // true if x is perfect square
+    static boolean isPerfectSquare(int x) {
+        int s = (int)Math.sqrt(x);
+        return (s * s == x);
+    }
+
+    // Returns true if n is a
+    // Fibonacci Number, else false
+    static boolean isFibonacci(int n) {
+        // n is Fibonacci if one of
+        // 5*n*n + 4 or 5*n*n - 4 or
+        // both are a perfect square
+        return isPerfectSquare(5 * n * n + 4) ||
+            isPerfectSquare(5 * n * n - 4);
+    }
+
+
+    // Delete the node from a Circular Linked list
+    static void deleteNode(Node head_ref, Node del) {
+        Node temp = head_ref;
+
+        // If node to be deleted is head node
+        if (head_ref == del)
+            head_ref = del.next;
+
+        // Traverse list till not found
+        // delete node
+        while (temp.next != del) {
+            temp = temp.next;
+        }
+
+        // Copy the address of the node
+        temp.next = del.next;
+
+        // Finally, free the memory
+        // occupied by del
+        del = null;
+
+        return;
+    }
+
+    // Function to delete all the Fibonacci nodes
+    // from the singly circular linked list
+    static Node deleteFibonacciNodes(Node head) {
+        Node curr = head;
+
+        // traverse the list and del the node
+        // if its data is a fibonacci number
+        while (curr.next != head) {
+            if (isFibonacci(curr.data)) {
+                deleteNode(head, curr);
+            }
+
+            curr = curr.next;
+        }
+
+        return head;
+
+    }
+
+
+    public static void main(String args[]) {
+        Node head = null;
+        head = push(head, 20);
+        head = push(head, 13);
+        head = push(head, 6);
+        head = push(head, 34);
+        head = push(head, 11);
+        head = push(head, 9);
+
+        head = deleteFibonacciNodes(head);
+        printlist(head);
+    }
+}
+
+
+Time complexity : O(N)
+Space Complexity : O(1)
