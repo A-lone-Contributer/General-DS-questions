@@ -1,0 +1,130 @@
+// Split a make insertion in a Circular Linked List (beginning, end and at any point)
+
+class source {
+
+    // structure of Node class
+    static class Node {
+        int data;
+        Node next;
+
+    }
+
+    // function to print the list 
+    static void printlist(Node head) {
+    
+        Node temp = head;
+        if (head != null) {
+            do {
+                System.out.print(temp.data + "->");
+                temp = temp.next;
+            } while (temp != head);
+        }
+        System.out.println();
+
+    }
+
+    // function to insert Node at the end of CLL
+    static Node insertEnd(int key, Node head) {
+    
+        // create a new node with data as key
+        Node new_node = new Node();
+        new_node.data = key;
+        
+        Node temp = head;
+        
+        // if there is no node in the list
+        if (head == null) {
+            head = new_node;
+            new_node.next = head;
+
+        } else {
+        
+            // else traverse till the end 
+            temp = head;
+            while (temp.next != head) {
+                temp = temp.next;
+            }
+
+            // make last node as new_node 
+            temp.next = new_node;
+            
+            // make new_node point to the head
+            new_node.next = head;
+
+        }
+
+        return head;
+
+    }
+
+    // function to insert Node at the beginning of CLL
+    static Node push(int key, Node head) {
+        
+        // create a new node with key as data
+        Node new_node = new Node();
+        Node temp = head;
+        new_node.data = key;
+        new_node.next = head;
+
+        // if there is no node then insert the node and make
+        // it point to the head
+        if (head == null) {
+            head = new_node;
+            new_node.next = new_node;
+        } else {
+        
+            // else traverse till the end and make end as new_node
+            while (temp.next != head)
+                temp = temp.next;
+            temp.next = new_node;
+        }
+        
+        // make new_node as head
+        head = new_node;
+        return head;
+    }
+
+
+    // function to insert Node at any point of CLL
+    static Node insertAny(int pos, int key, Node head) {
+    
+        // create a new node with key as data
+        Node new_node = new Node();
+        new_node.data = key;
+        Node temp = head;
+        
+        // reach the position where we want to insert
+        for (int i = 0; i < pos - 1; i++) {
+            temp = temp.next;
+        }
+        
+        // store the next of curr node
+        Node x = temp.next;
+        
+        // make it point to the new node
+        temp.next = new_node;
+        
+        // make next of new node point to the x
+        new_node.next = x;
+
+        return head;
+    }
+
+    // driver code
+    public static void main(String args[]) {
+        Node head = null;
+        head = insertEnd(10, head);
+        head = push(12, head);
+        head = insertAny(2, head);
+
+        printlist(head);
+
+        splithalf(head);
+
+    }
+}
+
+
+// Time Complexity : O(1) for beginning
+//                   O(N) for end and any point
+// Space Complexity : O(1)
