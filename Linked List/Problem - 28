@@ -1,0 +1,116 @@
+class source{
+    
+    // structure of Node class
+    static class Node{
+        int data;
+        Node next;
+
+    }
+
+    // function to print the list 
+    static void printlist(Node head)
+    {
+        Node temp=head;
+        if(head!=null)
+        {
+        do
+        {
+            System.out.print(temp.data + "->");
+            temp = temp.next;
+        }while (temp != head);
+        }
+        System.out.println();
+
+    }
+    
+    // function to insert Node at the end of CLL
+    static Node insertEnd(int key,Node head)
+      {
+          Node new_node =new Node();
+          Node temp=head;
+          new_node.data=key;
+          if (head==null)
+          {
+              head=new_node;
+              new_node.next=head;
+
+          }
+          else
+          {
+              temp=head;
+              while(temp.next!=head)
+              {
+                  temp=temp.next;
+              }
+
+              temp.next=new_node;
+              new_node.next=head;
+
+          }
+
+          return head;
+
+      }
+      
+    // function to split list into half
+    static void splithalf(Node head)
+    {
+        // Tortoise and hare approach
+        Node fast_ptr=head;
+        Node slow_ptr=head;
+        
+        // boundary case
+        if (head==null)
+        {
+            return;
+        }
+        
+        
+        /* If there are odd nodes in the circular list then 
+         fast_ptr->next becomes head and for even nodes  
+         fast_ptr->next->next becomes head */
+        while(fast_ptr.next!=head && fast_ptr.next.next!=head)
+        {   fast_ptr=fast_ptr.next.next;
+            slow_ptr= slow_ptr.next;
+        }
+
+
+        // If there are even elements in list then move fast_ptr 
+        if (fast_ptr.next.next==head)
+            fast_ptr=fast_ptr.next;
+
+        Node head1=head;
+        Node head2=head;
+        
+        // Set the head pointer of second half
+        if (head.next != head) {
+            head2 = slow_ptr.next;
+        }
+
+        // Make second half circular
+        fast_ptr.next=head2;
+        
+        // Make first half circular
+        slow_ptr.next=head;
+        printlist(head1);
+        printlist(head2);
+
+    }
+
+    // driver code
+    public static void main(String args[])
+    {
+        Node head=null;
+        head=insertEnd(10,head);
+        head=insertEnd(12,head);
+        head=insertEnd(15,head);
+        head=insertEnd(20,head);
+        
+        printlist(head);
+
+	      splithalf(head);
+    }
+}
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
