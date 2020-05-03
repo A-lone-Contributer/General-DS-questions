@@ -1,0 +1,104 @@
+// Java implementation to find the sum and 
+// product of all of the Even Digit sum nodes 
+// in a circularly linked list 
+class GFG {
+
+    // Structure for a node
+    static class Node {
+        int data;
+        Node next;
+
+    }
+
+    // Function to insert a node at the ending
+    // of a Circular linked list
+    static Node insertend(int key, Node head) {
+
+        // Create a new node
+        Node new_node = new Node();
+        new_node.data = key;
+
+        // If linked list is null then
+        // make the first node as head 
+        // after insertion
+        if (head == null) {
+            head = new_node;
+            new_node.next = head;
+
+        } else {
+
+            // traverse to the end and insert
+            // node at the end and make
+            // it point to the head
+            Node temp = head;
+            while (temp.next != head) {
+                temp = temp.next;
+            }
+
+            temp.next = new_node;
+            new_node.next = head;
+        }
+
+        return head;
+    }
+
+    // Function print the list
+    static void printlist(Node head) {
+        Node temp = head;
+        if (head != null) {
+            do {
+                // Traverse first to last node
+                System.out.print(temp.data + " ");
+                temp = temp.next;
+            } while (temp != head);
+        }
+
+        System.out.println();
+
+    }
+
+    // Function to calulate the sum of
+    // indivdual digits
+    static int getsum(int n) {
+        int sum = 0;
+        while (n != 0) {
+            sum += n % 10;
+            n /= 10;
+        }
+        return sum;
+    }
+
+    // Function to calculate sum and
+    // product
+    static void SumPro(Node head) {
+        Node temp = head;
+        int Sum = 0;
+        int Prod = 1;
+        do {
+            // Check if current node's
+            // data has an even digit sum
+            if (getsum(temp.data) % 2 == 0) {
+                Sum += temp.data;
+                Prod *= temp.data;
+            }
+
+            temp = temp.next;
+
+        } while (temp != head);
+
+        System.out.print("Sum = " + Sum);
+        System.out.print(", Product = " + Prod);
+    }
+
+    public static void main(String args[]) {
+        Node head = null;
+        head = insertend(13, head);
+        head = insertend(6, head);
+        head = insertend(8, head);
+        head = insertend(15, head);
+        head = insertend(16, head);
+        System.out.print("Initial List: ");
+        printlist(head);
+        SumPro(head);
+    }
+}
