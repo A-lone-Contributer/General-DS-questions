@@ -1,0 +1,121 @@
+// Insertions in a Doubly Linked List (beginning, end and after a node)
+
+class Misc {
+
+    // structure of node class
+    static class Node {
+        int data;
+        Node prev;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+        }
+    }
+
+    // function to add a node in the beginning
+    static Node addBeg(Node head, int key) {
+
+        // allocate a node
+        Node new_node = new Node(key);
+
+        // if the list is empty, then make the first node as head
+        if (head == null) {
+            new_node.prev = null;
+            new_node.next = null;
+            head = new_node;
+        }
+
+        else {
+
+            // insert at the beginning
+            new_node.prev = null;
+            new_node.next = head;
+            head = new_node;
+        }
+
+        return head;
+
+    }
+
+    // function to insert a node after a given node
+    static void insertafter(Node prev_node, int key) {
+
+        // allocate the node
+        Node new_node = new Node(key);
+
+        // let A and C and we have to insert B in between
+
+        // make C's prev point to B's next
+        prev_node.next.prev = new_node.next;
+
+        // B's next point to C
+        new_node.next = prev_node.next;
+
+        // A's next point to B
+        prev_node.next = new_node;
+
+        // B's prev point to A
+        new_node.prev = prev_node;
+
+    }
+
+    // function to add a node at the end
+    static void AddEnd(Node head, int key) {
+
+        Node temp = head;
+
+        // make  a point reach the end
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        // allocate the node
+        Node new_node = new Node(key);
+
+        // make last node next point to new node
+        temp.next = new_node;
+
+        // make new node previous point to temp
+        new_node.prev = temp;
+
+        // make new node next as null
+        new_node.next = null;
+
+
+    }
+
+    // utility function to print the DLL
+    static void printList(Node head) {
+        Node temp = head;
+        System.out.print("Null");
+        while (temp != null) {
+            System.out.print("<-" + temp.data + "->");
+            temp = temp.next;
+        }
+
+        System.out.print("Null");
+    }
+
+    // driver code
+    public static void main(String[] args) {
+
+        // make head point to null
+        Node head = null;
+
+        head = addBeg(head, 10);
+        head = addBeg(head, 13);
+        head = addBeg(head, 12);
+
+        insertafter(head, 8);
+
+        AddEnd(head, 14);
+
+        printList(head);
+    }
+
+}
+
+// Time Complexity : O(1) for beginning
+//                   O(N) for end and any point
+// Space Complexity : O(1)
