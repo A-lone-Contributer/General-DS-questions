@@ -111,15 +111,13 @@ class source {
     }
 
     // driver code
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Node head = null;
         head = insertEnd(10, head);
         head = push(12, head);
-        head = insertAny(2, head);
+        head = insertAny(2, 6, head);
 
         printlist(head);
-
-        splithalf(head);
 
     }
 }
