@@ -1,0 +1,110 @@
+// Program to reverse a Doubly Linked List
+
+public class Misc{
+
+    // structure of the Node class
+    static class Node{
+        int data;
+        Node prev;
+        Node next;
+
+        Node(int data)
+        {
+            this.data=data;
+        }
+    }
+
+    // Utility function to add a node at the end
+    static Node AddEnd(Node head, int key)
+    {
+        Node temp=head;
+        Node new_node = new Node(key);
+
+        if(head==null)
+        {
+            new_node.prev=null;
+            new_node.next=null;
+            head=new_node;
+        }
+        else{
+
+            while(temp.next!=null)
+            {
+                temp=temp.next;
+            }
+
+            temp.next = new_node;
+            new_node.prev= temp;
+            new_node.next=null;
+
+        }
+
+        return head;
+    }
+
+    // function to reverse the DLL
+    static Node reverse(Node head)
+    {
+        // curr pointer to store the current node
+        Node curr= head;
+        
+        // head for the resultant list
+        Node new_head = head;
+        
+        // while there are nodes in the list
+        while(curr!=null)
+        { 
+            // swap the prev and next pointer of the curr node
+            Node temp=curr.prev;
+            curr.prev=curr.next;
+            curr.next=temp;
+            
+            // update the head continously
+            new_head=curr;
+            
+            // update the curr ( as swapping the prev and next so
+            // doing curr.next will make the pointer move backward so 
+            // we do this)
+            curr=curr.prev;
+
+        }
+
+        return new_head;
+
+
+    }
+  
+   // utility function to print the list
+   static void printList(Node head)
+    {
+        Node temp=head;
+        System.out.print("Null");
+        while(temp!=null)
+        {
+            System.out.print("<-"+temp.data+"->");
+            temp=temp.next;
+        }
+
+        System.out.print("Null");
+    }
+  
+   // driver code
+    public static void main(String args[])
+    {
+        Node head=null;
+        head=AddEnd(head,10);
+        head=AddEnd(head,13);
+        head=AddEnd(head,12);
+
+        printList(head);
+
+        head=reverse(head);
+        System.out.println();
+        printList(head);
+
+    }
+
+}
+
+// Time Complexity : O(n)
+// Space Complexity : O(1)
