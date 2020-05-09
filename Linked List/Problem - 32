@@ -1,0 +1,140 @@
+// Clone a Doubly Linked List with next pointer and a prev pointer which
+// is basically a random pointer and can point to any node in the List
+
+public class Misc{
+
+    // structure of Node class
+    static class Node{
+        int data;
+        Node prev;
+        Node next;
+
+        Node(int data)
+        {
+            this.data=data;
+            next = prev = null;
+        }
+    }
+
+    static Node clone(Node head)
+    {
+        // make current point to the head
+        Node curr = head;
+
+        // create a temp pointer initialised to null
+        Node temp;
+
+        // this loop inserts a node in between of the original linked list
+
+        // if 1->2->3->null then it converts it into 1->1->2->2->3->null
+        while (curr!=null)
+        {
+            // store the next of curr
+            temp =curr.next;
+
+            // create a new node and make it point as current's next having
+            // data of current node
+            curr.next= new Node(curr.data);
+
+            // now make the current's next next point to temp
+            // i.e in this case we have 1->1--2 we want to create a link
+            // between 1 and 2
+            curr.next.next = temp;
+
+            // now update the current node
+            curr=temp;
+        }
+
+        // make current node point to head
+        curr = head;
+
+        // this loop adjusts the random pointers of the newly created LL
+        while (curr!=null){
+
+            if(curr.next != null)
+
+                // make curr.next.random = curr.random.next
+                curr.next.prev = (curr.prev != null)
+                        ? curr.prev.next : null;
+
+            // move to the next newly added node by
+            // skipping an original node
+            curr = (curr.next != null) ? curr.next.next
+                    : null;
+        }
+
+
+        Node original = head;
+        Node copy = head.next;
+
+        // save the start of cloned LL
+        temp=copy;
+
+        // this loop seperated out the cloned LL from the original
+
+        // while both the list have elements
+        while (original != null && copy != null)
+        {
+            // make my next point to my next to next as the next is cloned node
+            original.next = (original.next != null)? original.next.next : null;
+
+            // similarly do for the cloned linked list
+            copy.next = (copy.next != null) ? copy.next.next : null;
+
+            // update both pointers
+            original = original.next;
+            copy = copy.next;
+        }
+
+        // return the head of cloned LL
+        return temp;
+
+
+    }
+
+    // Utility function to print the linked list
+    static void printList(Node head)
+    {
+        Node temp=head;
+        System.out.print("Null");
+        while(temp!=null)
+        {
+            System.out.print("<-"+temp.data+"->");
+            temp=temp.next;
+        }
+
+        System.out.print("Null");
+    }
+
+    // driver code
+    public static void main(String[] args)
+    {
+        Node start = new Node(1);
+        start.next = new Node(2);
+        start.next.next = new Node(3);
+        start.next.next.next = new Node(4);
+        start.next.next.next.next = new Node(5);
+
+        start.prev = start.next.next;
+
+        start.next.prev = start;
+
+        start.next.next.prev = start.next.next.next.next;
+        start.next.next.next.prev = start.next.next.next.next;
+
+        start.next.next.next.next.prev= start.next;
+
+        System.out.println("Original List:");
+        printList(start);
+        System.out.println();
+        System.out.println("Cloned List:");
+
+        Node cloned_list = clone(start);
+        printList(cloned_list);
+
+    }
+
+}
+
+// Time Complexity : O(n)
+// Space Complexity : O(1)
