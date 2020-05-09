@@ -1,0 +1,146 @@
+// Swap the Kth node from the beginning and from the start
+
+public class Misc {
+
+    // structure of Node class
+    static class Node {
+        int data;
+        Node prev;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            next = prev = null;
+        }
+    }
+
+
+    // Utility function to add a node at the end
+    static Node AddEnd(Node head, int key)
+    {
+        Node temp=head;
+        Node new_node = new Node(key);
+
+        if(head==null)
+        {
+            new_node.prev=null;
+            new_node.next=null;
+            head=new_node;
+        }
+        else{
+
+            while(temp.next!=null)
+            {
+                temp=temp.next;
+            }
+
+            temp.next = new_node;
+            new_node.prev= temp;
+            new_node.next=null;
+
+        }
+
+        return head;
+    }
+
+    /* Scenarios:
+        Let x is the Kth node from beg and Y is the kth node from the end.
+        (N are nodes of DLL)
+        1. N->Y->X->N->Null
+        2. N->X->Y->N->Null
+        3. N->XY->N->Null
+        4. XY->Null
+     */
+
+    static Node swapKth(Node head, int k) {
+
+        int count = 0;
+        Node last = head;
+        while (last!= null) {
+            count++;
+            last=last.next;
+        }
+
+        Node X = head;
+        Node X_prev = null;
+        for(int i=1;i<k;i++) {
+            X_prev = X;
+            X = X.next;
+        }
+
+        Node Y = head;
+        Node Y_prev = null;
+        for(int i=1;i<count-k+1;i++) {
+            Y_prev = Y;
+            Y = Y.next;
+        }
+
+
+        // if k is invalid
+        if (k > count)
+            return null;
+
+
+        // scenario 3
+        if (X==Y) {
+            return head;
+        }
+
+        // scenario 1 and 2
+        if (X_prev != null)
+            X_prev.next = Y;
+
+        if (Y_prev != null)
+            Y_prev.next = X;
+
+        // swapping the nodes
+        Node temp = X.next;
+        X.next = Y.next;
+        Y.next = temp;
+
+        // if the k is 1
+        if (k == 1)
+            head = Y;
+
+        // if the k is equal to the length of LL
+        if (k == count)
+            head = X;
+
+        return head;
+
+
+    }
+
+
+    // Utility function to print the linked list
+    static void printList(Node head) {
+        Node temp = head;
+        System.out.print("Null");
+        while (temp != null) {
+            System.out.print("<-" + temp.data + "->");
+            temp = temp.next;
+        }
+
+        System.out.print("Null");
+    }
+
+    // driver code
+    public static void main(String[] args) {
+        Node head = null;
+        for(int i=0;i<5;i++)
+        {
+            head= AddEnd(head,i);
+        }
+        printList(head);
+        int k=2;
+        System.out.println();
+        head = swapKth(head,k);
+        printList(head);
+    }
+
+}
+
+// 0 1 2 3 4 5
+
+// Time Complexity : O(n)
+// Space Complexity : O(1)
