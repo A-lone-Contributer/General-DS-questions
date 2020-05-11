@@ -1,0 +1,112 @@
+// Find a pair in a sorted DLL with a given sum
+
+import org.jetbrains.annotations.NotNull;
+
+public class Misc {
+
+    // structure of Node class
+    static class Node {
+        int data;
+        Node prev;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            next = prev = null;
+        }
+    }
+
+
+    // Utility function to add a node at the end
+    static @NotNull Node AddEnd(Node head, int key) {
+        Node temp = head;
+        Node new_node = new Node(key);
+
+        if (head == null) {
+            new_node.prev = null;
+            new_node.next = null;
+            head = new_node;
+        } else {
+
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+
+            temp.next = new_node;
+            new_node.prev = temp;
+            new_node.next = null;
+
+        }
+
+        return head;
+    }
+
+    // function to find the pair with a given sum
+    static void pairsum(Node head, int k) {
+        
+        boolean flag = false;
+        Node right = head;
+        Node left = head;
+        while (right.next != null) {
+            right = right.next;
+        }
+
+        while (left != right && left != null && right != null) {
+
+            if (left.data + right.data == k) {
+                flag = true;
+                System.out.println("(" + left.data + "," + right.data + ")");
+                left = left.next;
+                right = right.prev;
+
+            } else {
+                
+                // if the sum is large 
+                if (left.data + right.data < k)
+                    
+                    // then move left pointer forward
+                    left = left.next;
+                else
+                    // else move right pointer backwards
+                    right = right.prev;
+            }
+        }
+
+        if (!flag) {
+            System.out.println("No pair found!");
+        }
+    }
+
+
+    // Utility function to print the linked list
+    static void printList(Node head) {
+        Node temp = head;
+        System.out.print("Null");
+        while (temp != null) {
+            System.out.print("<-" + temp.data + "->");
+            temp = temp.next;
+        }
+
+        System.out.print("Null");
+    }
+
+    // driver code
+    public static void main(String[] args) {
+        Node head = null;
+        head = AddEnd(head, 1);
+        head = AddEnd(head, 2);
+        head = AddEnd(head, 3);
+        head = AddEnd(head, 4);
+        head = AddEnd(head, 5);
+        head = AddEnd(head, 6);
+        head = AddEnd(head, 7);
+        printList(head);
+        System.out.println();
+        int k = 7;
+        pairsum(head, k);
+    }
+
+}
+
+// Time Complexity: O(n)
+// Space Complexity: O(1)
