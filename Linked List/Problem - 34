@@ -1,0 +1,147 @@
+// QuickSort in a Doubly Linked List
+
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
+public class Misc {
+
+    // structure of Node class
+    static class Node {
+        int data;
+        Node prev;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            next = prev = null;
+        }
+    }
+
+
+    // Utility function to add a node at the end
+    static @NotNull Node AddEnd(Node head, int key)
+    {
+        Node temp=head;
+        Node new_node = new Node(key);
+
+        if(head==null)
+        {
+            new_node.prev=null;
+            new_node.next=null;
+            head=new_node;
+        }
+        else{
+
+            while(temp.next!=null)
+            {
+                temp=temp.next;
+            }
+
+            temp.next = new_node;
+            new_node.prev= temp;
+            new_node.next=null;
+
+        }
+
+        return head;
+    }
+
+    // utility function to find the last node
+    @Contract(pure = true)
+    static Node lastNode(@NotNull Node head)
+    {
+        while (head.next!=null)
+            head=head.next;
+        return head;
+    }
+    
+    // Function to perform partition around the pivot
+    static @NotNull Node partition(@NotNull Node low, @NotNull Node high)
+    {
+        // select the last node's data as pivot
+        int pivot=high.data;
+        
+        Node i=low.prev;
+        Node j=low;
+        
+        // while there are nodes in LL
+        while (j!=high)
+        {   
+            // check if pivot is greater than or equal to the current data
+            if (j.data<=pivot)
+            {
+                // i++
+                if(i==null)
+                    i=low;
+                else
+                    i=i.next;
+                
+                // swap data of ith and jth nodes
+                int temp=i.data;
+                i.data = j.data;
+                j.data=temp;
+
+            }
+            
+            j=j.next;
+        }
+        // i++
+        i = (i==null) ? low : i.next;
+        
+        // swap ith node and high's data
+        int temp=i.data;
+        i.data = high.data;
+        high.data=temp;
+        
+        // return pivot node
+        return i;
+    }
+
+    // Recursive quick sort
+    static void quicksort(Node low,Node high)
+    {
+        // check for boundary cases
+        if(high!=null && low!=high && low!=high.next)
+        {
+            // find the pivot
+            Node temp=partition(low,high);
+            
+            // sort recursively before and after the pivot
+            quicksort(low,temp.prev);
+            quicksort(temp.next,high);
+        }
+    }
+
+
+    // Utility function to print the linked list
+    static void printList(Node head) {
+        Node temp = head;
+        System.out.print("Null");
+        while (temp != null) {
+            System.out.print("<-" + temp.data + "->");
+            temp = temp.next;
+        }
+
+        System.out.print("Null");
+    }
+
+    // driver code
+    public static void main(String[] args) {
+        Node head = null;
+
+        head = AddEnd(head,10);
+        head = AddEnd(head,11);
+        head = AddEnd(head,2);
+        head = AddEnd(head,43);
+        head = AddEnd(head,21);
+
+        printList(head);
+        System.out.println();
+        quicksort(head,lastNode(head));
+        printList(head);
+    }
+
+}
+
+// Time Complexity: O(n^2)
+// Space Complexity: O(log(n))
