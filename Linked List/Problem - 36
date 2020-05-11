@@ -1,0 +1,125 @@
+// Sorted Insert in a Sorted Doubly Linked List
+
+import org.jetbrains.annotations.NotNull;
+
+public class Misc {
+
+    // structure of Node class
+    static class Node {
+        int data;
+        Node prev;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            next = prev = null;
+        }
+    }
+
+
+    // Utility function to add a node at the end
+    static @NotNull Node AddEnd(Node head, int key) {
+        Node temp = head;
+        Node new_node = new Node(key);
+
+        if (head == null) {
+            new_node.prev = null;
+            new_node.next = null;
+            head = new_node;
+        } else {
+
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+
+            temp.next = new_node;
+            new_node.prev = temp;
+            new_node.next = null;
+
+        }
+
+        return head;
+    }
+
+    // function to insert in a sorted DLL
+    static @NotNull Node sortedInsert(Node head, int key)
+    {
+        // allocate the node
+        Node new_node = new Node(key);
+        
+        // if there is no node then insert at the start and make it head
+        if(head==null)
+        {
+            new_node.next=null;
+            new_node.prev=null;
+            head=new_node;
+        }
+        
+        // if the node is the first node to be inserted and list is not empty
+        else if(head.data>new_node.data)
+        {
+
+            new_node.next=head;
+            head.prev=new_node;
+            head=new_node;
+        }
+        else{
+            // Inserting somewhere in between 
+            Node curr=head;
+            while (curr.next!=null && curr.next.data<new_node.data)
+                curr=curr.next;
+
+            // handling the case if the node is inserted at the end
+            if (curr.next==null)
+            {
+                curr.next=new_node;
+                new_node.prev=curr;
+
+            }
+            else{
+                Node x=curr.next;
+                curr.next=new_node;
+                new_node.prev=curr;
+                new_node.next=x;
+                x.prev=new_node;
+            }
+        }
+    return head;
+    }
+
+
+    // Utility function to print the linked list
+    static void printList(Node head) {
+        Node temp = head;
+        System.out.print("Null");
+        while (temp != null) {
+            System.out.print("<-" + temp.data + "->");
+            temp = temp.next;
+        }
+
+        System.out.print("Null");
+    }
+
+    // driver code
+    public static void main(String[] args) {
+        Node head = null;
+        head = AddEnd(head, 1);
+        head = AddEnd(head, 2);
+        head = AddEnd(head, 7);
+        head = AddEnd(head, 9);
+        head = AddEnd(head, 11);
+        printList(head);
+        
+        System.out.println();
+
+        head =sortedInsert(head, 8);
+        head =sortedInsert(head, 0);
+        head =sortedInsert(head, 13);
+        
+        printList(head);
+    }
+
+}
+
+// Time Complexity: O(n)
+// Space Complexity: O(1)
