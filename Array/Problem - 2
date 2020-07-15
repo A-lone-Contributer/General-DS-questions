@@ -1,0 +1,46 @@
+// Find all Sub-arrays with zero sum
+
+import java.util.HashMap;
+
+class Misc {
+    
+    // function to print ranges of zero sum subarrays
+    static void zeroSumSubarray(int[] arr) {
+        int sum = 0;
+        
+        // create a hashmap
+        HashMap<Integer, Integer> map = new HashMap<>();
+        System.out.println("Ranges with zero sum:");
+        
+        // loop through all the elements
+        for (int i = 0; i < arr.length; i++) {
+            sum += arr[i];
+            
+            // if a zero sum is encountered then
+            // print from start to that index
+            if (sum == 0) {
+                System.out.println(0 + " to " + i);
+            }
+
+            // if we get the same sum that has already in the map
+            // i.e no contribution to the sum
+            if (map.containsKey(sum)) {
+                
+                // print the index of previous sum to the new sum
+                System.out.print(map.get(sum) + 1 + " to " + i);
+            }
+
+            // put sum as keys in hashmap with indexes as values
+            map.put(sum, i);
+        }
+    }
+
+    // Driver Code
+    public static void main(String[] args) {
+        int[] arr = {-1, 2, 1, -4, 2, 3, -1, 2};
+        zeroSumSubarray(arr);
+    }
+}
+
+// Time Complexity : O(n) 
+// Space Complexity : O(n)
