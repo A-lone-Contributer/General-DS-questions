@@ -1,0 +1,43 @@
+// Minimum Groups to make all element same in a binary array
+
+class Misc {
+
+    // function to print the group indices
+    public static void printGroups(int[] arr)
+    {
+        int n = arr.length;
+
+        // loop through all the elements
+        for(int i=1;i<n-1;i++)
+        {
+            // if the current element is not same as previous
+            // that means we have started the second group
+            if(arr[i]!=arr[i-1])
+            {
+                // check if this element is same as 0th element of not
+                if(arr[i]!=arr[0])
+                {
+                    System.out.print("Flip elements from "+ i +" to ");
+                }
+                else
+                    System.out.println(i-1);
+            }
+        }
+
+        // to handle the last element
+        if(arr[n-1]!=arr[0])
+        {
+            System.out.print("Flip the element at " + (n-1));
+        }
+    }
+
+    // Driver Code
+    public static void main(String[] args) {
+
+        int [] list = {0,0,1,1,0,0,1,1,0,1};
+        printGroups(list);
+    }
+}
+
+// Time Complexity : O(n)
+// Space Complexity : O(1)
