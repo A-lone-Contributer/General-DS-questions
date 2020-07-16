@@ -1,0 +1,42 @@
+// Find sub-array in a unsorted array with given sum (non-negative numbers)
+
+class Misc {
+
+    public static boolean isSubSum(int[] arr, int sum) {
+        // initialise current sum to first element
+        int curr_sum = arr[0], start = 0;
+        int n = arr.length;
+
+        // loop through rest of the elements
+        for (int end = 1; end < n; end++) {
+            // if the current sum is greater than sum
+            // or the start doesn't exceed end
+            while (curr_sum > sum && start < end - 1) {
+                // remove the first element to lower
+                // the current sum
+                curr_sum -= arr[start];
+                start++;
+            }
+
+            // if the current sum and given sum
+            // are equal then return true
+            if (curr_sum == sum)
+                return true;
+
+            // add current element to the window
+            curr_sum += arr[end];
+        }
+
+        // return true or false based on the result
+        return (curr_sum == sum);
+    }
+
+    // Driver Code
+    public static void main(String[] args) {
+        int[] list = {15, 2, 4, 8, 9, 5, 10, 23};
+        System.out.println(isSubSum(list, 23));
+    }
+}
+
+// Time Complexity : O(n)
+// Space Complexity : O(1)
