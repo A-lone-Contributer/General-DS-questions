@@ -1,0 +1,90 @@
+// Count the Occurrence of element in the array
+
+class Misc {
+
+    public static int firstOccurance(int[] arr, int key, int start, int end) {
+
+        // create two pointer start and end
+        while (start <= end) {
+
+            // calculate the index of middle element
+            int mid = (start + end) / 2;
+
+            // if the element to be searched is less
+            if (arr[mid] > key)
+
+                // move to left
+                end = mid - 1;
+
+                // if the element to be search is greater than mid
+            else if (arr[mid] < key)
+
+                // move to right
+                start = mid + 1;
+
+                // if the element is equal then check if the element
+                // is the first element or before it are not same as
+                // key because in that case it won't be the first index
+            else if (mid == 0 || arr[mid - 1] != key)
+
+                return mid;
+
+            else
+
+                // move to left
+                end = mid - 1;
+        }
+
+        return -1;
+
+    }
+
+    public static int lastOccurance(int[] arr, int key, int start, int end) {
+
+        // create two pointer start and end
+        while (start <= end) {
+
+            // calculate the index of middle element
+            int mid = (start + end) / 2;
+
+            // if the element to be searched is less
+            if (arr[mid] > key)
+
+                // move to left
+                end = mid - 1;
+
+                // if the element to be search is greater than mid
+            else if (arr[mid] < key)
+
+                // move to right
+                start = mid + 1;
+
+                // if the element is equal then check if the element
+                // is the last element or after it are not same as
+                // key because in that case it won't be the last index
+            else if (mid == arr.length - 1 || arr[mid + 1] != key)
+
+                return mid;
+
+            else
+
+                // move to right
+                start = mid + 1;
+        }
+
+        return -1;
+
+    }
+
+
+    // Driver Code
+    public static void main(String[] args) {
+        int[] arr = {1, 10, 10, 10, 20, 20};
+        System.out.print(lastOccurance(arr, 10, 0, arr.length - 1) - 
+                firstOccurance(arr, 10, 0, arr.length - 1) + 1);
+    }
+}
+
+
+// Time Complexity : O(log(n))
+// Space Complexity : O(1)
