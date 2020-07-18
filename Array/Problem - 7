@@ -1,0 +1,45 @@
+// Find the peak element in an unsorted array
+
+class Misc {
+
+    // function to find the peak element
+    public static int peakElement(int[] arr) {
+
+        // keep two pointers
+        int start = 0;
+        int end = arr.length - 1;
+
+
+        while (start <= end) {
+
+            // find index of middle element
+            int mid = (start + end) / 2;
+
+            // check for first and last indexes
+            if ((mid == 0 || arr[mid- 1] <= arr[mid]) && (mid==arr.length-1 || arr[mid+1]<=arr[mid]))
+                return mid;
+
+            // check if previous element is greater
+            // which means peak is on the left
+            if(mid>0 && arr[mid-1]>=arr[mid])
+                end=mid-1;
+            else
+
+                // else it is on the right
+                start=mid+1;
+        }
+
+        return -1;
+    }
+
+
+    // Driver Code
+    public static void main(String[] args) {
+        int[] arr = {1,10, 70, 40, 20};
+        System.out.print("Peak element is: " + arr[peakElement(arr)]);
+    }
+}
+
+
+// Time Complexity : O(log(n))
+// Space Complexity : O(1)
