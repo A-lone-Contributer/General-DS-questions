@@ -1,0 +1,61 @@
+// Find the element in a sorted and rotated array
+
+
+class Misc {
+
+    public static int sortedRotated(int[] arr, int key) {
+
+        // keep two pointers at the start and
+        // end of array
+        int start = 0;
+        int end = arr.length - 1;
+
+        while (start <= end) {
+
+            // calculate the index of mid element
+            int mid = (start + end) / 2;
+
+            // if the element to be searched is
+            // equal to mid then simply return
+            if (arr[mid] == key)
+                return mid;
+
+            // if the start is less than mid then the left half is
+            // sorted
+            if (arr[start] < arr[mid]) {
+
+                // check if the key is greater than start and
+                // less than mid
+                if (key >= arr[start] && key < arr[mid])
+
+                    // move to left
+                    end = mid - 1;
+                else
+
+                    // move to right
+                    start = mid + 1;
+
+                // will run if right half is sorted
+            } else {
+
+                if (key > arr[mid] && key <= arr[end])
+                    start = mid + 1;
+                else
+                    end = mid - 1;
+            }
+        }
+
+        return -1;
+
+    }
+
+    // Driver Code
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 30, 40, 50, 8, 9};
+        System.out.print(sortedRotated(arr, 50));
+    }
+}
+
+
+// Time Complexity : O(log(n))
+// Space Complexity : O(1)
