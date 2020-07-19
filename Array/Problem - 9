@@ -1,0 +1,81 @@
+// Find the median of two sorted arrays
+
+class Misc {
+
+    // function to find median of two sorted arrays
+    public static double findMedianSortedArrays(int[] arr1, int[] arr2) {
+
+        int m = arr1.length, n = arr2.length;
+
+        int low = 0, high = m;
+
+        while (low <= high) {
+
+            // find the partition of smaller array
+            int partitionX = (low + high) / 2;
+
+            // partition of second array
+            int partitionY = ((m + n + 1) / 2) - partitionX;
+
+            // to find maximum of left of arr1, if this partition has non-zero
+            // length then return the last element else return -inf as there is no
+            // left half
+            int maxLeftX = (partitionX > 0) ? arr1[partitionX - 1] : Integer.MIN_VALUE;
+
+            // to find minimum of right of arr1 if this array partition
+            // has all the elements then return -inf as there is no element in the
+            // right of first partition else return the first element in the partition
+            int minRightX = (partitionX == m) ? Integer.MIN_VALUE : arr1[partitionX];
+
+            // to find maximum of left of arr2, if this partition has non-zero length
+            // then return the last element else return -inf as there is no left half
+            int maxLeftY = (partitionY > 0) ? arr2[partitionY - 1] : Integer.MIN_VALUE;
+
+            // to find minimum of right of arr2 if this array partition
+            // has all the elements then return -inf as there is no element in the
+            // right of first partition else return the first element in the partition
+            int minRightY = (partitionY == n) ? Integer.MIN_VALUE : arr2[partitionY];
+
+
+            // validate the partitions i.e both the elements in arr1 i.e maxLeftX and minRightX
+            // should be less than the other two
+            if (maxLeftX <= minRightX && minRightX >= maxLeftY) {
+
+                // check if the length of final array will be even or odd
+                if ((m + n) % 2 == 0)
+                    return (Math.max(maxLeftX, maxLeftY) + Math.min(minRightX, minRightY)) / 2.0;
+                else
+                    return Math.max(maxLeftX, maxLeftY);
+
+                // if the partitions weren't right then move
+                // the partition regions
+            } else if (maxLeftX > minRightY)
+                high = partitionX - 1;
+            else
+                low = partitionX + 1;
+
+        }
+
+        return -1;
+
+    }
+
+    // Driver Code
+    public static void main(String[] args) {
+        int[] arr1 = {1, 15, 22, 30, 70};
+        int[] arr2 = {4, 20, 32, 50, 55, 61};
+
+        // we need the first array to be smaller so
+        // if the first array is larger then we will swap them
+        if ((arr1.length > arr2.length)) {
+            System.out.print(findMedianSortedArrays(arr2, arr1));
+        } else {
+            System.out.print(findMedianSortedArrays(arr1, arr2));
+        }
+
+    }
+}
+
+
+// Time Complexity : O(min(log(m,n)))
+// Space Complexity : O(1)
