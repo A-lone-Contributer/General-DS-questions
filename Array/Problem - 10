@@ -1,0 +1,78 @@
+// Find the intersection of two sorted arrays
+
+class Misc {
+
+    // function to find the intersection of two arrays
+    public static void intersection(int[] arr1, int[] arr2) {
+        int m = arr1.length, n = arr2.length;
+        int i = 0, j = 0;
+
+        while (i < m && j < n) {
+            
+            // to skip duplicates in array 1
+            if ((i > 0) && (arr1[i - 1] == arr1[i])) {
+                i++;
+                continue;
+            }
+
+            // to skip duplicates in array 2
+            if ((j > 0) && (arr2[j - 1] == arr2[j])) {
+                j++;
+                continue;
+            }
+            
+            // if the element in array 1 is large then print the smaller
+            // and move the pointer of that array
+            if (arr1[i] > arr2[j]) {
+                System.out.print(arr2[j] + " ");
+                j++;
+                
+             
+            // if the element in array 2 is large then print the smaller
+            // and move the pointer of that array
+            } else if (arr1[i] < arr2[j]) {
+                System.out.print(arr1[i] + " ");
+                i++;
+
+            // if both the array elements are equal then print either of them
+            // move pointers of both the arrays    
+            } else {
+                System.out.print(arr1[i] + " ");
+                i++;
+                j++;
+            }
+        }
+
+        // to handle the remaining elements of arr1 if arr2
+        // is exhausted
+        while (i < m) {
+            if (i == 0 || arr1[i - 1] != arr1[i]) {
+                System.out.print(arr1[i] + " ");
+                i++;
+            }
+        }
+
+        // to handle the remaining elements of arr2 if arr1
+        // is exhausted
+        while (j < n) {
+            if (j == 0 || arr2[j - 1] != arr2[j]) {
+                System.out.print(arr2[j] + " ");
+                j++;
+            }
+        }
+    }
+
+
+    // Driver Code
+    public static void main(String[] args) {
+        int[] arr1 = {1, 15, 22, 30, 70};
+        int[] arr2 = {4, 20, 22, 50, 55, 55};
+
+        intersection(arr1, arr2);
+
+    }
+}
+
+
+// Time Complexity : O(m+n)
+// Space Complexity : O(1)
