@@ -15,7 +15,7 @@ class Misc {
 
         // traverse till right boundary and not till the end as we 
         // don't want to re-process the already processed elements
-        while (i < right_boundary) {
+        while (i <= right_boundary) {
 
             // if the element is smaller than 1 then swap the element to the 
             // left index and  increase i
