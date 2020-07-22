@@ -1,0 +1,54 @@
+// Sort 0's, 1's and 2's in an array
+
+class Misc {
+
+    // utility function to swap two array elements
+    public static void swap(int[] a, int i, int j) {
+        int t = a[i];
+        a[i] = a[j];
+        a[j] = t;
+    }
+
+    // function to sort the array
+    public static int[] sort012(int[] arr) {
+        int left_boundary = 0, right_boundary = arr.length - 1, i = 0;
+
+        // traverse till right boundary and not till the end as we 
+        // don't want to re-process the already processed elements
+        while (i < right_boundary) {
+
+            // if the element is smaller than 1 then swap the element to the 
+            // left index and  increase i
+            if (arr[i] < 1) {
+                swap(arr, i, left_boundary);
+                left_boundary++;
+                i++;
+                
+              // if the element is greater than 1 then swap the element to the 
+              // right index and don't increase i because the right half elements
+              // are still not processed  
+            } else if (arr[i] > 1) {
+                swap(arr, i, right_boundary);
+                right_boundary--;
+                
+              // if the element is equal to 1 then do nothing  
+            } else
+                i++;
+        }
+
+        return arr;
+    }
+
+    // Driver Code
+    public static void main(String[] args) {
+        int[] arr = {0, 1, 0, 2, 1, 2};
+        int[] result = sort012(arr);
+        for (int i : result) {
+            System.out.print(i + " ");
+        }
+    }
+}
+
+
+// Time Complexity : O(n)
+// Space Complexity : O(1)
