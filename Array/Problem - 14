@@ -1,4 +1,4 @@
-// Transpose a matrix using constant space
+// Transpose a matrix in constant space
 
 import java.util.Scanner;
 
