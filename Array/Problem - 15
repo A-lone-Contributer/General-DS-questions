@@ -1,0 +1,63 @@
+// Rotate a matrix 90 degrees Counter Clockwise
+
+import java.util.Scanner;
+
+class Misc {
+
+    // Driver Code
+    public static void main(String[] args) {
+        System.out.print("Enter 2D array size : ");
+        Scanner sc = new Scanner(System.in);
+        int rows = sc.nextInt();
+        int columns = sc.nextInt();
+
+        System.out.println("Enter array elements : ");
+
+        int[][] twoD = new int[rows][columns];
+
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                twoD[i][j] = sc.nextInt();
+            }
+        }
+        System.out.print("\nData you entered : \n");
+        for (int[] x : twoD) {
+            for (int y : x) {
+                System.out.print(y + " ");
+            }
+            System.out.println();
+        }
+
+        for (int i = 0; i < rows; i++) {
+            for(int j=i+1; j<columns;j++) {
+                int temp = twoD[i][j];
+                twoD[i][j] = twoD[j][i];
+                twoD[j][i] = temp;
+            }
+        }
+
+        for(int i=0;i<rows/2;i++)
+        {
+            for(int j=0; j<columns;j++)
+            {
+                int temp=twoD[i][j];
+                twoD[i][j]=twoD[rows-i-1][j];
+                twoD[rows-i-1][j]=temp;
+            }
+        }
+
+        System.out.print("\nAfter 90 degree Counter Clockwise rotation : \n");
+        for (int[] x : twoD) {
+            for (int y : x) {
+                System.out.print(y + " ");
+            }
+            System.out.println();
+        }
+
+    }
+}
+
+
+// Time Complexity : O(n*n)
+// Space Complexity : O(1)
