@@ -29,7 +29,6 @@ class Misc {
             System.out.println();
         }
 
-        System.out.print("\nGiven Matrix in snake order: \n");
         for (int i = 0; i < rows; i++) {
             for(int j=i+1; j<columns;j++) {
                 int temp = twoD[i][j];
