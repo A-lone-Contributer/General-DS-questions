@@ -1,0 +1,55 @@
+// Transpose a matrix using constant space
+
+class Misc {
+
+    public static void spiral(int[][] arr, int rowEnd , int colEnd)
+    {
+        int rowBeg = 0, colBeg = 0, i;
+
+        while(rowBeg < rowEnd && colBeg < colEnd)
+        {
+            for (i = colBeg; i < colEnd;i++)
+            {
+                System.out.print(arr[rowBeg][i]+" ");
+            }
+            rowBeg++;
+
+            for (i = rowBeg; i < rowEnd;i++)
+            {
+                System.out.print(arr[i][colEnd-1]+" ");
+            }
+            colEnd--;
+
+            if(rowBeg < rowEnd)
+            {
+                for (i = colEnd - 1; i >= colBeg;i--)
+                {
+                    System.out.print(arr[rowEnd - 1][i]+" ");
+                }
+                rowEnd--;
+            }
+
+            if(colBeg < colEnd)
+            {
+                for (i = rowEnd - 1; i >= rowBeg; i--)
+                {
+                    System.out.print(arr[i][colBeg]+ " ");
+                }
+                colBeg++;
+            }
+        }
+    }
+    // Driver Code
+    public static void main(String[] args) {
+        int[][] mat = {{10, 20, 30},
+                       {15, 25, 80},
+                       {35, 90, 100}};
+        System.out.println("Spiral Traversal of Matrix is: ");
+        spiral(mat, 3,3);
+        
+    }
+}
+
+
+// Time Complexity : O(n*n)
+// Space Complexity : O(1)
