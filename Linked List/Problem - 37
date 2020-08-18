@@ -1,0 +1,107 @@
+// Implement LRU Cache
+
+import java.util.*;
+
+// Structure of a cache entry
+class CacheEntry{
+
+    int key;
+    String value;
+
+    CacheEntry(int key, String value) {
+        this.key = key;
+        this.value = value;
+    }
+}
+
+class LRUCache {
+
+    Deque<CacheEntry> queue = new LinkedList<>();
+    Map<Integer, CacheEntry> map = new HashMap<>();
+
+    final int CACHE_SIZE = 4;
+
+    // Function to get an entry from the cache
+    public String getFromCache(int key) {
+
+        // if map contains the key
+        if (map.containsKey(key)) {
+
+            // get the entry
+            CacheEntry entry = map.get(key);
+
+            // remove the entry
+            queue.remove(entry);
+
+            // add to the front as it is most recently accessed
+            queue.addFirst(entry);
+
+            // return the value
+            return entry.value;
+        }
+
+        // else return null
+        return null;
+    }
+
+    // Function to add an entry to the cache
+    public void putInCache(int key, String value) {
+
+        // if the map doesn't have the key
+        if (!map.containsKey(key)) {
+
+            // and queue is full
+            if (queue.size() == CACHE_SIZE) {
+
+                // remove entry from the last
+                CacheEntry elementToBeRemoved = queue.removeLast();
+
+                // remove from the map as well
+                map.remove(elementToBeRemoved.key);
+
+            } else {
+
+                // if the queue isn't full the simply get the
+                // entry from map and remove from the queue
+                CacheEntry entry = map.get(key);
+                queue.remove(entry);
+            }
+        }
+        
+        // if entry is not in the queue then add it in the front 
+        // and also add it in the map
+        CacheEntry newEntry = new CacheEntry(key, value);
+        queue.addFirst(newEntry);
+        map.put(key, newEntry);
+    }
+
+    // Display contents of cache
+    public void display()
+    {
+        for (CacheEntry cacheEntry : queue) {
+            System.out.print(cacheEntry.key + " ");
+        }
+    }
+    
+    // Driver Code
+    public static void main(String[] args) {
+        LRUCache cache = new LRUCache();
+        cache.putInCache(1, "Product-1");
+        cache.putInCache(2, "Product-2");
+        cache.putInCache(3, "Product-3");
+        cache.putInCache(1, "Product-1");
+        cache.putInCache(4, "Product-4");
+        cache.putInCache(5, "Product-5");
+
+        System.out.println(cache.getFromCache(2));
+        System.out.println(cache.getFromCache(4));
+
+        System.out.println("Content of the Cache:");
+
+        cache.display();
+
+    }
+}
+
+// Time Complexity : O(1)
+// Space Complexity : O(1)
