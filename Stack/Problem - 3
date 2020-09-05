@@ -16,11 +16,6 @@ public class stack {
 
         // traverse through the array
         for (int j : arr) {
-        
-            // there is no smaller element to the left of
-            // first element so add -1
-            if (st.empty())
-                result.add(-1);
 
             // if there are elements in the stack then check if
             // top of the stack is greater than current element
@@ -44,6 +39,8 @@ public class stack {
         }
 
         return result;
+
+
     }
 
     // driver code
