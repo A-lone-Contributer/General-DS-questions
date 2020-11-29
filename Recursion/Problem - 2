@@ -1,0 +1,29 @@
+// Find the first index
+
+public class recursion {
+
+    // function to find the first index of given element
+    public static int findFirstIndex(int[] a, int idx, int key) {
+
+        // if we reach the end and element is not found, return -1
+        if (idx == a.length)
+            return -1;
+
+        // if the element is found, return it
+        if (a[idx] == key)
+            return idx;
+
+        // faith that this fxn will return max of idx+1 to a.length
+        return findFirstIndex(a, idx + 1, key);
+    }
+
+    // driver code
+    public static void main(String[] args) {
+        int[] arr = {2, 7, 1, 4, 8, 9, 7, 4, 0};
+        int key = 4;
+        System.out.println(findFirstIndex(arr, 0, key));
+    }
+}
+
+// Time Complexity : O(n)
+// Space Complexity : O(n)
