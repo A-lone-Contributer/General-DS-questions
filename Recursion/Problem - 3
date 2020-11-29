@@ -1,4 +1,4 @@
-// Find the last index
+// Find the last index of key in an array
 
 public class recursion {
 
