@@ -1,4 +1,4 @@
-// Find the first index
+// Find the first index of key in an array
 
 public class recursion {
 
