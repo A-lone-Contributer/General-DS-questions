@@ -19,3 +19,6 @@ public class core {
     }
 }
 
+// Time Complexity : O(n)
+// Space Complexity : O(1)
+
